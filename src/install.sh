@@ -6,7 +6,6 @@
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
-REPO_URL="https://s3.eu-west-2.amazonaws.com/mdaffin-arch/repo/x86_64"
 MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=GB&protocol=https&use_mirror_status=on"
 
 pacman -Sy --noconfirm pacman-contrib dialog
@@ -72,21 +71,9 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 ### Install and configure the basic system ###
-cat >>/etc/pacman.conf <<EOF
-[mdaffin]
-SigLevel = Optional TrustAll
-Server = $REPO_URL
-EOF
-
-pacstrap /mnt mdaffin-desktop
+pacstrap -K /mnt base linux linux-firmware
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
-
-cat >>/mnt/etc/pacman.conf <<EOF
-[mdaffin]
-SigLevel = Optional TrustAll
-Server = $REPO_URL
-EOF
 
 arch-chroot /mnt bootctl install
 
