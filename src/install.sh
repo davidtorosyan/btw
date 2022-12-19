@@ -1,7 +1,7 @@
 #!/bin/bash
 # WARNING: this script will destroy data on the selected disk.
 # This script can be run by executing the following:
-#   curl -sL https://git.io/vAoV8 | bash
+#   curl -sL bit.ly/btwarch | bash
 # Copied from https://github.com/mdaffin/arch-pkgs/blob/bc9575362c9b0dd38b414c42b5b9c79b0630228c/installer/install-arch
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
