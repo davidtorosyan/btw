@@ -6,6 +6,9 @@
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
+# Make sure to run this first to check we're in UEFI (TODO add to script):
+# ls /sys/firmware/efi/efivars
+
 MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on"
 
 # In case this fails, try these commands. Probably add them to the script too.
