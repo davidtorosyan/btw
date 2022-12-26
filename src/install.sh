@@ -81,6 +81,7 @@ pacstrap -K /mnt base linux linux-firmware zsh
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
+# Use systemd-boot as the bootloader
 arch-chroot /mnt bootctl install
 
 cat <<EOF > /mnt/boot/loader/loader.conf
