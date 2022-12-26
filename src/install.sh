@@ -112,3 +112,5 @@ echo "# Created by btw" > "/mnt/home/$user/.zshrc"
 
 echo "$user:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
+
+echo "Done! You can now reboot and remove the boot disk."
