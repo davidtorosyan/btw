@@ -9,6 +9,8 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 # Make sure to run this first to check we're in UEFI (TODO add to script):
 # ls /sys/firmware/efi/efivars
 
+# Find a way to check for intel
+
 MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on"
 
 # In case this fails, try these commands. Probably add them to the script too.
@@ -80,7 +82,7 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 ### Install and configure the basic system ###
-pacstrap -K /mnt base linux linux-firmware zsh
+pacstrap -K /mnt base linux linux-firmware zsh intel-ucode
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
