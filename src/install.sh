@@ -6,7 +6,7 @@
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
-MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=GB&protocol=https&use_mirror_status=on"
+MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on"
 
 pacman -Sy --noconfirm pacman-contrib dialog
 
@@ -89,7 +89,7 @@ initrd   /initramfs-linux.img
 options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
 EOF
 
-echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
+echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
 
 arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel "$user"
 arch-chroot /mnt chsh -s /usr/bin/zsh
