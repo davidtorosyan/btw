@@ -90,6 +90,8 @@ options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
 EOF
 
 echo "LANG=en_US.UTF-8" > /mnt/etc/locale.conf
+arch-chroot /mnt ln -sf /usr/share/zoneinfo/America/Los_Angeles /etc/localtime
+arch-chroot /mnt hwclock --systohc
 
 arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel "$user"
 arch-chroot /mnt chsh -s /usr/bin/zsh
