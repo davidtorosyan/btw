@@ -71,7 +71,7 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 ### Install and configure the basic system ###
-pacstrap -K /mnt base linux linux-firmware
+pacstrap -K /mnt base linux linux-firmware zsh
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
