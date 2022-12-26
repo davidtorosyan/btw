@@ -107,6 +107,7 @@ arch-chroot /mnt hwclock --systohc
 
 arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel "$user"
 arch-chroot /mnt chsh -s /usr/bin/zsh
+echo "# Created by btw" > "/mnt/home/$user/.zshrc"
 
 echo "$user:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
