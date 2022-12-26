@@ -8,7 +8,7 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on"
 
-pacman -Sy --noconfirm pacman-contrib dialog
+pacman -Sy --noconfirm archlinux-keyring pacman-contrib dialog
 
 echo "Updating mirror list"
 curl -s "$MIRRORLIST_URL" | \
