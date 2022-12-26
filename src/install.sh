@@ -8,6 +8,12 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
 MIRRORLIST_URL="https://archlinux.org/mirrorlist/?country=US&protocol=https&use_mirror_status=on"
 
+# In case this fails, try these commands. Probably add them to the script too.
+# killall gpg-agent
+# rm -rf /etc/pacman.d/gnupg/
+# pacman-key --init
+# pacman-key --populate archlinux
+
 pacman -Sy --noconfirm archlinux-keyring pacman-contrib dialog
 
 echo "Updating mirror list"
