@@ -83,7 +83,7 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 ### Install and configure the basic system ###
-pacstrap -K /mnt base linux linux-firmware zsh intel-ucode
+pacstrap -K /mnt base linux linux-firmware zsh intel-ucode dhcpcd sudo
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
@@ -110,7 +110,14 @@ arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel "$user"
 arch-chroot /mnt chsh -s /usr/bin/zsh
 echo "# Created by btw" > "/mnt/home/$user/.zshrc"
 
+cat <<EOF > "/mnt/etc/sudoers.d/00_$user"
+$user ALL=(ALL) ALL
+EOF
+arch-chroot /mnt chmod 440 "/etc/sudoers.d/00_$user"
+
 echo "$user:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
+
+arch-chroot /mnt systemctl enable dhcpcd
 
 echo "Done! You can now reboot and remove the boot disk."
