@@ -83,7 +83,11 @@ mkdir /mnt/boot
 mount "${part_boot}" /mnt/boot
 
 ### Install and configure the basic system ###
-pacstrap -K /mnt base linux linux-firmware zsh intel-ucode dhcpcd sudo
+pacstrap -K /mnt \
+  base linux linux-firmware \
+  intel-ucode \
+  zsh dhcpcd sudo \
+  git github-cli python3
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
@@ -120,4 +124,10 @@ echo "root:$password" | chpasswd --root /mnt
 
 arch-chroot /mnt systemctl enable dhcpcd
 
-echo "Done! You can now reboot and remove the boot disk."
+echo "Completed basic setup, configuring btw."
+
+arch-chroot /mnt gh auth login -p https -w
+
+arch-chroot /mnt git clone https://github.com/davidtorosyan/btw-private.git "/home/$user/code/btw-private"
+
+echo "Done! You can now reboot and remove the boot media."
