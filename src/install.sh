@@ -86,6 +86,7 @@ mount "${part_boot}" /mnt/boot
 pacstrap -K /mnt \
   base linux linux-firmware \
   intel-ucode \
+  base-devel \
   zsh dhcpcd sudo \
   git github-cli python
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
@@ -128,6 +129,8 @@ echo "Completed basic setup, configuring btw."
 
 arch-chroot /mnt gh auth login -p https -w
 
-arch-chroot /mnt git clone https://github.com/davidtorosyan/btw-private.git "/home/$user/code/btw-private"
+arch-chroot /mnt git clone https://github.com/davidtorosyan/btw-private.git "/opt/btw-private"
+arch-chroot /mnt /opt/btw-private/install.sh
+arch-chroot /mnt chown -R $user:$user /opt/btw-private
 
 echo "Done! You can now reboot and remove the boot media."
