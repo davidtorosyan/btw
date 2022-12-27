@@ -133,7 +133,7 @@ arch-chroot /mnt gh auth setup-git
 pkgdir=/opt/btw-private
 arch-chroot /mnt git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
 arch-chroot /mnt chown -R $user:$user $pkgdir
-arch-chroot /mnt su $user -s "cd $pkgdir; makepkg"
+arch-chroot /mnt su $user -c "cd $pkgdir; makepkg"
 pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
 arch-chroot /mnt pacman --noconfirm -U $pkgdir/$pkg
 
