@@ -87,7 +87,7 @@ pacstrap -K /mnt \
   base linux linux-firmware \
   intel-ucode \
   zsh dhcpcd sudo \
-  git github-cli python3
+  git github-cli python
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
