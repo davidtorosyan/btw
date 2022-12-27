@@ -127,13 +127,18 @@ arch-chroot /mnt systemctl enable dhcpcd
 
 echo "Completed basic setup, configuring btw."
 
-arch-chroot /mnt gh auth login -p https -w
-arch-chroot /mnt gh auth setup-git
-
 pkgdir=/opt/btw-private
-arch-chroot /mnt git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
-arch-chroot /mnt chown -R $user:$user $pkgdir
-arch-chroot /mnt su $user -c "cd $pkgdir; makepkg"
+arch-chroot /mnt mkdir $pkgdir
+arch-chroot /mnt chown $user:$user $pkgdir
+
+arch-chroot /mnt su $user << EOF
+gh auth login -p https -w
+gh auth setup-git
+git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
+cd $pkgdir
+makepkg
+EOF
+
 pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
 arch-chroot /mnt pacman --noconfirm -U $pkgdir/$pkg
 
