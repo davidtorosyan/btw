@@ -142,4 +142,14 @@ EOF
 pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
 arch-chroot /mnt pacman --noconfirm -U $pkgdir/$pkg
 
+cat <<EOF > /mnt/usr/bin/btwup
+#!/bin/bash
+cd $pkgdir
+git pull
+makepkg
+pkg=$(ls . | grep zst)
+sudo pacman --noconfirm -U \$pkg
+EOF
+arch-chroot /mnt chmod +x "/usr/bin/btwup"
+
 echo "Done! You can now reboot and remove the boot media."
