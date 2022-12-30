@@ -136,7 +136,7 @@ gh auth login -p https -w
 gh auth setup-git
 git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
 cd $pkgdir
-makepkg
+makepkg -s
 EOF
 
 pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
@@ -149,7 +149,7 @@ trap 's=\$?; echo "\$0: Error on line "\$LINENO": \$BASH_COMMAND"; exit \$s' ERR
 #!/bin/bash
 cd $pkgdir
 git pull
-makepkg -f
+makepkg -f -s
 pkg=$(ls . | grep zst)
 sudo pacman --noconfirm -U \$pkg
 EOF
