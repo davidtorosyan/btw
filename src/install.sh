@@ -136,7 +136,7 @@ gh auth login -p https -w
 gh auth setup-git
 git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
 cd $pkgdir
-makepkg -s
+makepkg --nodeps
 EOF
 
 pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
