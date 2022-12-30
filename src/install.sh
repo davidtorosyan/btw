@@ -150,7 +150,7 @@ trap 's=\$?; echo "\$0: Error on line "\$LINENO": \$BASH_COMMAND"; exit \$s' ERR
 cd $pkgdir
 git pull
 makepkg -f -s
-pkg=$(ls . | grep zst)
+pkg=\$(ls . | grep zst)
 sudo pacman --noconfirm -U \$pkg
 EOF
 arch-chroot /mnt chmod +x "/usr/bin/btwup"
