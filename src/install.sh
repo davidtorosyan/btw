@@ -146,7 +146,7 @@ cat <<EOF > /mnt/usr/bin/btwup
 #!/bin/bash
 cd $pkgdir
 git pull
-makepkg
+makepkg -f
 pkg=$(ls . | grep zst)
 sudo pacman --noconfirm -U \$pkg
 EOF
