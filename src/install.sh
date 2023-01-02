@@ -151,9 +151,4 @@ makepkg -si --noconfirm -f
 EOF
 arch-chroot /mnt chmod +x "/usr/bin/btwup"
 
-arch-chroot /mnt su $user << EOF
-btw --install-completion
-EOF
-echo "compinit" >> "/mnt/home/$user/.zshrc"
-
 echo "Done! You can now reboot and remove the boot media."
