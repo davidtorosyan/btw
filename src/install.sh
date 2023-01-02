@@ -88,7 +88,7 @@ pacstrap -K /mnt \
   intel-ucode \
   base-devel \
   zsh dhcpcd sudo \
-  git github-cli python
+  git github-cli
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
 
@@ -137,11 +137,8 @@ gh auth login -p https -w
 gh auth setup-git
 git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
 cd $pkgdir
-makepkg --nodeps
+makepkg -si --noconfirm -f
 EOF
-
-pkg=$(arch-chroot /mnt ls $pkgdir | grep zst)
-arch-chroot /mnt pacman --noconfirm -U $pkgdir/$pkg
 
 cat <<EOF > /mnt/usr/bin/btwup
 set -uo pipefail
@@ -150,9 +147,7 @@ trap 's=\$?; echo "\$0: Error on line "\$LINENO": \$BASH_COMMAND"; exit \$s' ERR
 #!/bin/bash
 cd $pkgdir
 git pull
-makepkg -f -s --noconfirm
-pkg=\$(ls . | grep zst)
-sudo pacman --noconfirm -U \$pkg
+makepkg -si --noconfirm -f
 EOF
 arch-chroot /mnt chmod +x "/usr/bin/btwup"
 
