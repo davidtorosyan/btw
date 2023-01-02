@@ -114,6 +114,7 @@ arch-chroot /mnt hwclock --systohc
 arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel "$user"
 arch-chroot /mnt chsh -s /usr/bin/zsh
 echo "# Created by btw" > "/mnt/home/$user/.zshrc"
+arch-chroot /mnt chown $user:$user "/mnt/home/$user/.zshrc"
 
 cat <<EOF > "/mnt/etc/sudoers.d/00_$user"
 $user ALL=(ALL) ALL
