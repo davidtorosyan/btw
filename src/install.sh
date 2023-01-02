@@ -149,7 +149,7 @@ trap 's=\$?; echo "\$0: Error on line "\$LINENO": \$BASH_COMMAND"; exit \$s' ERR
 #!/bin/bash
 cd $pkgdir
 git pull
-makepkg -f -s
+makepkg -f -s --noconfirm
 pkg=\$(ls . | grep zst)
 sudo pacman --noconfirm -U \$pkg
 EOF
