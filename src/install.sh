@@ -164,7 +164,7 @@ mkdir "/mnt/home/$user/.zfunc"
 cat <<EOF >> "/mnt/home/$user/.zfunc/_$pkg"
 #compdef $pkg
 _${pkg}_completion() {
-  eval $(env _TYPER_COMPLETE_ARGS="\${words[1,\$CURRENT]}" _${pkg^^}_COMPLETE=complete_zsh $pkg)
+  eval \$(env _TYPER_COMPLETE_ARGS="\${words[1,\$CURRENT]}" _${pkg^^}_COMPLETE=complete_zsh $pkg)
 }
 compdef ${pkg}_completion $pkg
 EOF
