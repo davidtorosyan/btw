@@ -151,23 +151,9 @@ makepkg -si --noconfirm -f
 EOF
 arch-chroot /mnt chmod +x "/usr/bin/btwup"
 
-cat <<EOF >> "/mnt/home/$user/.zshrc"
-autoload -Uz compinit
-compinit
-zstyle ':completion:*' menu select
-fpath+=~/.zfunc
-compinit
+arch-chroot /mnt su $user << EOF
+export _TYPER_COMPLETE_TEST_DISABLE_SHELL_DETECTION=True
+btw --install-completion zsh
 EOF
-
-pkg=btw
-mkdir "/mnt/home/$user/.zfunc"
-cat <<EOF >> "/mnt/home/$user/.zfunc/_$pkg"
-#compdef $pkg
-_${pkg}_completion() {
-  eval \$(env _TYPER_COMPLETE_ARGS="\${words[1,\$CURRENT]}" _${pkg^^}_COMPLETE=complete_zsh $pkg)
-}
-compdef ${pkg}_completion $pkg
-EOF
-arch-chroot /mnt chown -R $user:$user "/home/$user/.zfunc"
 
 echo "Done! You can now reboot and remove the boot media."
