@@ -155,5 +155,6 @@ arch-chroot /mnt su $user << EOF
 export _TYPER_COMPLETE_TEST_DISABLE_SHELL_DETECTION=True
 btw --install-completion zsh
 EOF
+echo "compinit" >> "/mnt/home/$user/.zshrc"
 
 echo "Done! You can now reboot and remove the boot media."
