@@ -137,7 +137,8 @@ gh auth login -p https -w
 gh auth setup-git
 git clone https://github.com/davidtorosyan/btw-private.git $pkgdir
 cd $pkgdir
-makepkg -si --noconfirm -f
+makepkg -sif --noconfirm
+rm -rf pkg build dist src/*.egg-info || true
 EOF
 
 cat <<EOF > /mnt/usr/bin/btwup
@@ -147,7 +148,8 @@ trap 's=\$?; echo "\$0: Error on line "\$LINENO": \$BASH_COMMAND"; exit \$s' ERR
 
 cd $pkgdir
 git pull
-makepkg -si --noconfirm -f
+makepkg -sif --noconfirm
+rm -rf pkg build dist src/*.egg-info || true
 EOF
 arch-chroot /mnt chmod +x "/usr/bin/btwup"
 
