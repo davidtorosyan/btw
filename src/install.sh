@@ -31,6 +31,10 @@ hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
 clear
 : ${hostname:?"hostname cannot be empty"}
 
+staticip=$(dialog --stdout --inputbox "Enter static ip" 0 0) || exit 1
+clear
+: ${staticip:?"staticip cannot be empty"}
+
 user=$(dialog --stdout --inputbox "Enter admin username" 0 0) || exit 1
 clear
 : ${user:?"user cannot be empty"}
@@ -87,7 +91,7 @@ pacstrap -K /mnt \
   base linux linux-firmware \
   intel-ucode \
   base-devel \
-  zsh dhcpcd sudo \
+  zsh sudo \
   git github-cli
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
@@ -126,7 +130,18 @@ arch-chroot /mnt chmod 440 "/etc/sudoers.d/00_$user"
 echo "$user:$password" | chpasswd --root /mnt
 echo "root:$password" | chpasswd --root /mnt
 
-arch-chroot /mnt systemctl enable dhcpcd
+gatewayip="${staticip%.*}.1"
+cat <<EOF > "/etc/systemd/network/20-wired.network"
+[Match]
+Name=eno1
+
+[Network]
+Address=$staticip/24
+Gateway=$gatewayip
+DNS=8.8.8.8
+EOF
+arch-chroot /mnt systemctl enable systemd-networkd.service
+arch-chroot /mnt systemctl enable systemd-networkd-wait-online@eno1.service
 
 echo "Completed basic setup, configuring btw."
 
