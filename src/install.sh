@@ -79,7 +79,7 @@ wipefs "${part_root}"
 
 mkfs.vfat -F32 "${part_boot}"
 mkswap "${part_swap}"
-mkfs.f2fs -f "${part_root}"
+mkfs.btrfs -f "${part_root}"
 
 swapon "${part_swap}"
 mount "${part_root}" /mnt
@@ -92,6 +92,7 @@ pacstrap -K /mnt \
   intel-ucode \
   base-devel \
   zsh sudo \
+  btrfs-progs \
   git github-cli
 genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 echo "${hostname}" > /mnt/etc/hostname
