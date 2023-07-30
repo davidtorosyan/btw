@@ -3,6 +3,7 @@
 # This script can be run by executing the following:
 #   curl -sL bit.ly/btwarch | bash
 # Copied from https://github.com/mdaffin/arch-pkgs/blob/bc9575362c9b0dd38b414c42b5b9c79b0630228c/installer/install-arch
+# Line endings have to be LF
 set -uo pipefail
 trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 
